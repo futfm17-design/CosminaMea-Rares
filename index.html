@@ -18,7 +18,7 @@ background:black;
 touch-action:manipulation;
 }
 
-/* INTRO CINEMATIC */
+/* INTRO */
 #intro{
 position:fixed;
 top:0;
@@ -104,6 +104,7 @@ border-radius:50%;
 color:white;
 font-size:18px;
 box-shadow:0 0 20px #8a2be2;
+cursor:pointer;
 }
 
 .quest{
@@ -128,7 +129,6 @@ font-family:'Great Vibes',cursive;
 background:linear-gradient(135deg,#4b00ff,#00bfff);
 color:white;
 box-shadow:0 0 20px #8a2be2;
-position:relative;
 cursor:pointer;
 }
 
@@ -138,7 +138,6 @@ font-size:18px;
 min-height:30px;
 }
 
-/* BUTON SECRET */
 .secret-btn{
 display:none;
 margin-top:25px;
@@ -148,26 +147,14 @@ color:white;
 padding:14px 32px;
 border-radius:40px;
 font-size:20px;
-letter-spacing:1px;
 cursor:pointer;
-transition:all 0.3s ease;
 animation:mysticGlow 2.5s infinite ease-in-out;
 }
 
-.secret-btn:hover{
-transform:scale(1.08);
-}
-
 @keyframes mysticGlow{
-0%{
-box-shadow:0 0 10px #4b00ff,0 0 20px #8a2be2,0 0 30px #00bfff;
-}
-50%{
-box-shadow:0 0 25px #8a2be2,0 0 45px #00bfff,0 0 60px #4b00ff;
-}
-100%{
-box-shadow:0 0 10px #4b00ff,0 0 20px #8a2be2,0 0 30px #00bfff;
-}
+0%{box-shadow:0 0 10px #4b00ff,0 0 20px #8a2be2;}
+50%{box-shadow:0 0 25px #8a2be2,0 0 45px #00bfff;}
+100%{box-shadow:0 0 10px #4b00ff,0 0 20px #8a2be2;}
 }
 
 .secret-section{
@@ -175,7 +162,6 @@ margin-top:20px;
 font-size:22px;
 display:none;
 text-shadow:0 0 20px #8a2be2;
-animation:zoom 1.5s forwards;
 }
 
 .heart{
@@ -183,6 +169,7 @@ position:fixed;
 pointer-events:none;
 animation:fall linear forwards;
 }
+
 @keyframes fall{
 to{transform:translateY(110vh);opacity:0}
 }
@@ -190,13 +177,7 @@ to{transform:translateY(110vh);opacity:0}
 .final{
 font-size:36px;
 margin-top:40px;
-animation:zoom 2s forwards;
 text-shadow:0 0 25px #8a2be2;
-}
-
-@keyframes zoom{
-from{transform:scale(0);opacity:0}
-to{transform:scale(1);opacity:1}
 }
 </style>
 </head>
@@ -213,7 +194,7 @@ to{transform:scale(1);opacity:1}
 <h1>Iubirea mea Cosmina, astăzi e despre noi 💖</h1>
 <div class="countdown" id="countdown"></div>
 
-<button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵</button>
+<button class="music-btn" id="musicBtn">🎵</button>
 
 <div class="image-container">
 <img src="poza.jpg">
@@ -224,12 +205,12 @@ to{transform:scale(1);opacity:1}
 Ești pregătită pentru cel mai sincer test al iubirii?
 </div>
 
-<button class="btn" id="yesBtn" onclick="answerYes()">Da ❤️</button>
+<button class="btn" id="yesBtn">Da ❤️</button>
 <button class="btn" id="noBtn">Nu 🙈</button>
 
 <div class="response" id="response"></div>
 
-<button class="secret-btn" id="secretBtn" onclick="toggleSecret()">🔐 Ce simt pentru tine…</button>
+<button class="secret-btn" id="secretBtn">🔐 Ce simt pentru tine…</button>
 <div class="secret-section" id="secretSection">
 Sper că înțelegi că ești absolut tot ce am!
 </div>
@@ -239,6 +220,8 @@ Sper că înțelegi că ești absolut tot ce am!
 <audio id="clickSound" src="click.mp3"></audio>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", function(){
 
 /* INTRO */
 const introMessages=[
@@ -253,6 +236,7 @@ const introMessages=[
 
 const introText=document.getElementById("introText");
 const intro=document.getElementById("intro");
+
 let msgIndex=0;
 let charIndex=0;
 
@@ -277,8 +261,7 @@ typeMessage();
 },1200);
 }
 }
-
-window.onload=function(){typeMessage();}
+typeMessage();
 
 /* COUNTDOWN */
 const countdown=document.getElementById("countdown");
@@ -287,7 +270,7 @@ const target=new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
-if(diff<=0){explodeFinal();return;}
+if(diff<=0)return;
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
@@ -295,13 +278,67 @@ let s=Math.floor((diff%(1000*60))/1000);
 countdown.innerHTML=`⏳ ${d}z ${h}h ${m}m ${s}s până la Valentine's Day`;
 },1000);
 
-/* RESTUL SCRIPTULUI RĂMÂNE IDENTIC */
+/* MUSIC */
+const music=document.getElementById("bgMusic");
+const musicBtn=document.getElementById("musicBtn");
+
+musicBtn.addEventListener("click",()=>{
+if(music.paused){
+music.play();
+musicBtn.innerHTML="⏸️";
+}else{
+music.pause();
+musicBtn.innerHTML="🎵";
+}
+});
+
+/* QUEST */
+const questions=[
+"Crezi în suflete pereche?",
+"Ai lupta pentru noi indiferent de obstacole?",
+"M-ai alege din nou în fiecare viață?",
+"Simți că iubirea noastră e unică?",
+"Îți vezi viitorul doar cu mine?"
+];
+
+let current=0;
+const funny=["Știam eu 😌","Răspuns corect!","Nu aveai altă opțiune 😏","Exact ce voiam să aud!"];
+
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const response=document.getElementById("response");
+const question=document.getElementById("question");
+const secretBtn=document.getElementById("secretBtn");
+const secretSection=document.getElementById("secretSection");
+
+yesBtn.addEventListener("click",()=>{
+document.getElementById("clickSound").play();
+response.innerText=funny[Math.floor(Math.random()*funny.length)];
+current++;
+if(current<questions.length){
+question.innerText=questions[current];
+}else{
+yesBtn.style.display="none";
+noBtn.style.display="none";
+secretBtn.style.display="inline-block";
+}
+});
+
+noBtn.addEventListener("mouseover",()=>{
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*70+"%";
+noBtn.style.top=Math.random()*70+"%";
+});
+
+secretBtn.addEventListener("click",()=>{
+secretSection.style.display="block";
+});
+
+});
 
 </script>
 </body>
 </html>
-
-
 
 
 
