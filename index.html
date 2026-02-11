@@ -112,23 +112,42 @@ font-size:18px;
 min-height:30px;
 }
 
-/* BUTON SECRET GLOW */
+/* BUTON SECRET MYSTIC PREMIUM */
 .secret-btn{
 display:none;
 margin-top:25px;
-background:linear-gradient(45deg,#ff00cc,#8000ff);
+background:linear-gradient(135deg,#4b00ff,#8a2be2,#00bfff);
 border:none;
 color:white;
-padding:12px 28px;
-border-radius:30px;
+padding:14px 32px;
+border-radius:40px;
 font-size:20px;
-box-shadow:0 0 20px #ff00cc;
-animation:pulseGlow 1.5s infinite alternate;
+letter-spacing:1px;
+cursor:pointer;
+transition:all 0.3s ease;
+animation:mysticGlow 2.5s infinite ease-in-out;
 }
 
-@keyframes pulseGlow{
-0%{box-shadow:0 0 15px #ff00cc;}
-100%{box-shadow:0 0 40px #ff66ff;}
+.secret-btn:hover{
+transform:scale(1.08);
+}
+
+@keyframes mysticGlow{
+0%{
+box-shadow:0 0 10px #4b00ff,
+           0 0 20px #8a2be2,
+           0 0 30px #00bfff;
+}
+50%{
+box-shadow:0 0 25px #8a2be2,
+           0 0 45px #00bfff,
+           0 0 60px #4b00ff;
+}
+100%{
+box-shadow:0 0 10px #4b00ff,
+           0 0 20px #8a2be2,
+           0 0 30px #00bfff;
+}
 }
 
 .secret-section{
@@ -186,7 +205,7 @@ Ești pregătită pentru cel mai sincer test al iubirii?
 
 <div class="response" id="response"></div>
 
-<button class="secret-btn" id="secretBtn" onclick="toggleSecret()">✨ Ultimul Adevăr</button>
+<button class="secret-btn" id="secretBtn" onclick="toggleSecret()">🔐 Ce simt pentru tine…</button>
 <div class="secret-section" id="secretSection">
 Sper că înțelegi că ești absolut tot ce am!
 </div>
@@ -250,7 +269,6 @@ showSecretPhase();
 }
 }
 
-/* BUTON NU FUge */
 const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("touchstart",moveNo);
 noBtn.addEventListener("mouseover",moveNo);
@@ -261,7 +279,6 @@ noBtn.style.left=Math.random()*70+"%";
 noBtn.style.top=Math.random()*70+"%";
 }
 
-/* FAZA SECRET */
 function showSecretPhase(){
 document.getElementById("question").innerText=
 "Mai este un ultim lucru important pentru noi...";
@@ -271,6 +288,9 @@ document.getElementById("noBtn").style.display="none";
 document.getElementById("response").innerText="";
 
 secretBtn.style.display="inline-block";
+
+/* Vibrație subtilă la apariție */
+if(navigator.vibrate){navigator.vibrate(80);}
 
 setTimeout(()=>{
 if(!secretClicked){
@@ -286,7 +306,6 @@ secretClicked=true;
 setTimeout(()=>{explodeFinal();},3000);
 }
 
-/* INIMI TAP */
 document.addEventListener("click",heart);
 document.addEventListener("touchstart",heart);
 
@@ -342,6 +361,8 @@ else{m.pause();b.innerHTML="🎵";}
 </script>
 </body>
 </html>
+
+
 
 
 
