@@ -29,7 +29,7 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-font-size:28px;
+font-size:30px;
 z-index:9999;
 text-shadow:0 0 20px #8a2be2,0 0 40px #00bfff;
 transition:opacity 2s ease;
@@ -52,7 +52,8 @@ transform:scale(1.1);
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at 30% 30%, rgba(138,43,226,0.3), transparent 60%),
+background:
+radial-gradient(circle at 30% 30%, rgba(138,43,226,0.3), transparent 60%),
 radial-gradient(circle at 70% 70%, rgba(0,191,255,0.3), transparent 60%);
 z-index:-1;
 }
@@ -61,10 +62,10 @@ z-index:-1;
 h1{
 margin-top:25px;
 font-size:28px;
-text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
+text-shadow:0 0 20px #8a2be2,0 0 40px #00bfff;
 }
 
-/* COUNTDOWN */
+/* COUNTDOWN GLOW */
 .countdown{
 margin-top:10px;
 font-size:20px;
@@ -102,7 +103,7 @@ padding:15px;
 .question{
 font-size:22px;
 min-height:70px;
-text-shadow:0 0 10px #8a2be2;
+text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
 }
 
 .btn{
@@ -123,7 +124,7 @@ font-size:18px;
 min-height:30px;
 }
 
-/* SECRET */
+/* SECRET BUTTON GLOW */
 .secret-btn{
 display:none;
 margin-top:25px;
@@ -133,13 +134,15 @@ color:white;
 padding:12px 28px;
 border-radius:30px;
 font-size:20px;
+text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
 }
 
+/* SECRET TEXT */
 .secret-section{
 margin-top:20px;
 font-size:22px;
 display:none;
-text-shadow:0 0 15px #8a2be2;
+text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
 }
 
 /* INIMI */
@@ -152,9 +155,11 @@ animation:fall linear forwards;
 to{transform:translateY(100vh);opacity:0}
 }
 
-.final{
-font-size:28px;
+.final-text{
+font-size:26px;
 text-shadow:0 0 20px #8a2be2,0 0 40px #00bfff;
+text-align:center;
+padding:20px;
 }
 
 </style>
@@ -204,7 +209,6 @@ const introTexts=[
 "Acesta nu este doar un site.",
 "Este o promisiune."
 ];
-
 let introIndex=0;
 
 function showIntro(){
@@ -226,8 +230,7 @@ const target=new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
-
-if(diff<=0){return;}
+if(diff<=0)return;
 
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
@@ -275,53 +278,35 @@ noBtn.style.top=Math.random()*70+"%";
 
 /* SECRET + OUTRO */
 const secretBtn=document.getElementById("secretBtn");
-const secretSection=document.getElementById("secretSection");
-
 secretBtn.addEventListener("click",()=>{
 
-secretSection.style.display="block";
+/* OUTRO CU ACELASI FUNDAL */
+document.body.innerHTML=`
+<div class="background-blur"></div>
+<div class="overlay"></div>
+<div class="final-text">
+Cosmina…<br><br>
+Te aleg în fiecare zi.<br>
+Chiar și atunci când e greu.<br>
+Chiar și atunci când obosim.<br><br>
+Pentru că tu ești liniștea mea.<br><br>
+Te iubește enorm,<br>
+Băiatul tău, Rareș ❤️
+</div>
+`;
 
 /* EXPLOZIE */
-for(let i=0;i<60;i++){
+for(let i=0;i<100;i++){
 let heart=document.createElement("div");
 heart.innerHTML="💖";
 heart.classList.add("heart");
 heart.style.left=Math.random()*100+"%";
 heart.style.top=Math.random()*100+"%";
-heart.style.fontSize=(Math.random()*25+20)+"px";
-heart.style.animationDuration=(Math.random()*2+2)+"s";
+heart.style.fontSize=(Math.random()*30+20)+"px";
+heart.style.animationDuration=(Math.random()*3+2)+"s";
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),4000);
+setTimeout(()=>heart.remove(),5000);
 }
-
-setTimeout(()=>{
-document.body.innerHTML=`
-<div style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-">
-<div class="final">
-Cosmina…<br><br>
-Te iubesc mai mult decât pot explica în cuvinte.<br><br>
-Ești liniștea mea.<br>
-Ești casa mea.<br>
-Ești totul pentru mine.<br><br>
-Te iubește enorm,<br>
-Băiatul tău, Rareș ❤️
-</div>
-</div>
-`;
-},1500);
 
 });
 
@@ -336,6 +321,7 @@ else{m.pause();b.innerHTML="🎵";}
 </script>
 </body>
 </html>
+
 
 
 
