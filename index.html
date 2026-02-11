@@ -4,103 +4,123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pentru Cosmina ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-background:black;
+font-family:'Great Vibes',cursive;
 color:white;
-font-family:'Poppins',sans-serif;
 text-align:center;
 overflow-x:hidden;
+background:black;
+touch-action:manipulation;
 }
 
-/* BACKGROUND */
-.background{
+/* FUNDAL */
+.background-blur{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:url("poza.jpg") center/cover no-repeat;
-filter:blur(45px) brightness(0.25);
-transform:scale(1.4);
+filter:blur(25px) brightness(0.4);
 z-index:-3;
+transform:scale(1.1);
 }
 
 .overlay{
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at center, rgba(114,9,183,0.35), black 70%);
+background:
+radial-gradient(circle at 30% 30%, rgba(114,9,183,0.3), transparent 60%),
+radial-gradient(circle at 70% 70%, rgba(67,97,238,0.3), transparent 60%);
 z-index:-2;
+animation:glowMove 8s infinite alternate ease-in-out;
 pointer-events:none;
 }
 
-/* TITLU */
+@keyframes glowMove{
+0%{filter:hue-rotate(0deg)}
+100%{filter:hue-rotate(40deg)}
+}
+
 h1{
-font-family:'Great Vibes',cursive;
-font-size:36px;
-margin-top:60px;
-padding:0 20px;
+margin-top:25px;
+font-size:30px;
 text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
+padding:0 15px;
 }
 
-/* COUNTDOWN */
 .countdown{
-font-family:'Great Vibes',cursive;
-font-size:26px;
-margin-top:15px;
+font-size:20px;
+margin-top:10px;
 text-shadow:0 0 15px #7209b7,0 0 35px #4361ee;
-}
-
-/* IMAGE */
-.image-container{
-margin-top:30px;
+padding:0 15px;
 }
 
 .image-container img{
 width:85%;
-max-width:380px;
+max-width:360px;
 border-radius:25px;
-filter:drop-shadow(0 0 40px rgba(114,9,183,0.8));
+box-shadow:0 0 50px #7209b7;
+margin-top:20px;
 }
 
-/* QUESTION */
+.quest{
+margin-top:30px;
+padding:15px;
+}
+
 .question{
-margin-top:40px;
-font-size:20px;
-padding:0 20px;
-min-height:60px;
+font-size:22px;
+min-height:70px;
 text-shadow:0 0 10px #7209b7,0 0 25px #4361ee;
 }
 
-/* BUTTONS */
 .btn{
-padding:14px 30px;
-margin:15px;
+display:inline-block;
+padding:14px 24px;
+margin:8px;
 border:none;
 border-radius:30px;
-font-size:16px;
-color:white;
+font-size:18px;
+font-family:'Great Vibes',cursive;
 background:linear-gradient(45deg,#7209b7,#4361ee);
-transition:0.2s;
-}
-
-.btn:active{
-transform:scale(0.9);
+color:white;
+position:relative;
 }
 
 .response{
 margin-top:10px;
+font-size:18px;
 min-height:30px;
 }
 
-/* SCLIPICI */
-.glitter{
+.secret-btn{
+display:none;
+margin-top:25px;
+background:linear-gradient(45deg,#7209b7,#4361ee);
+border:none;
+color:white;
+padding:12px 28px;
+border-radius:30px;
+font-size:20px;
+}
+
+.secret-section{
+margin-top:20px;
+font-size:22px;
+display:none;
+text-shadow:0 0 20px #7209b7;
+animation:zoom 1.5s forwards;
+}
+
+.sparkle{
 position:fixed;
-top:-10px;
 width:4px;
 height:4px;
 border-radius:50%;
@@ -116,109 +136,51 @@ animation:fall linear forwards;
 100%{transform:translateY(110vh);opacity:0;}
 }
 
-/* FINAL */
-#final{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-opacity:0;
-pointer-events:none;
-transition:2s;
-z-index:100;
+.final{
+font-size:36px;
+margin-top:40px;
+animation:zoom 2s forwards;
+text-shadow:0 0 30px #7209b7,0 0 60px #4361ee;
 }
 
-.final-line{
-font-family:'Great Vibes',cursive;
-font-size:32px;
-margin:10px;
-opacity:0;
-transition:2s;
-text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
+@keyframes zoom{
+from{transform:scale(0);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="background-blur"></div>
 <div class="overlay"></div>
 
 <h1>Iubirea mea Cosmina, astăzi e despre noi 💜</h1>
-
 <div class="countdown" id="countdown"></div>
 
 <div class="image-container">
 <img src="poza.jpg">
 </div>
 
+<div class="quest">
 <div class="question" id="question">
-Simți că suntem mai mult decât doi oameni?
+Ești pregătită pentru cel mai sincer test al iubirii?
 </div>
 
 <button class="btn" id="yesBtn">Da ❤️</button>
 <button class="btn" id="noBtn">Nu 🙈</button>
 
 <div class="response" id="response"></div>
-<button class="btn" id="secretBtn" style="display:none;">Promit.</button>
 
-<div id="final">
-<div class="final-line" id="f1">Cosmina…</div>
-<div class="final-line" id="f2">Te aleg în fiecare zi.</div>
-<div class="final-line" id="f3">Chiar și atunci când e greu.</div>
-<div class="final-line" id="f4">Chiar și atunci când obosim.</div>
-<div class="final-line" id="f5">Pentru că tu ești liniștea mea.</div>
-<div class="final-line" id="f6">— Băiatul tău, Rareș ❤️</div>
+<button class="secret-btn" id="secretBtn">✨ Ultimul Adevăr</button>
+<div class="secret-section" id="secretSection">
+Sper că înțelegi că ești absolut tot ce am!
+</div>
 </div>
 
 <audio id="bgMusic" src="muzica.mp3"></audio>
 
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-
-/* INTRO */
-let intro=document.createElement("div");
-intro.style.position="fixed";
-intro.style.width="100%";
-intro.style.height="100%";
-intro.style.background="black";
-intro.style.display="flex";
-intro.style.justifyContent="center";
-intro.style.alignItems="center";
-intro.style.fontFamily="Great Vibes";
-intro.style.fontSize="32px";
-intro.style.zIndex="200";
-document.body.appendChild(intro);
-
-let messages=["Cosmina…","Nu este doar un site.","Este o promisiune."];
-let index=0;
-
-function typeText(text,cb){
-let i=0;
-intro.innerHTML="";
-let interval=setInterval(()=>{
-intro.innerHTML+=text.charAt(i);
-i++;
-if(i>=text.length){
-clearInterval(interval);
-setTimeout(cb,1000);
-}
-},70);
-}
-
-function next(){
-if(index<messages.length){
-typeText(messages[index],()=>{index++;next();});
-}else{
-intro.style.opacity="0";
-setTimeout(()=>intro.remove(),1500);
-}
-}
-next();
 
 /* COUNTDOWN */
 const countdown=document.getElementById("countdown");
@@ -227,7 +189,7 @@ const target=new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
-if(diff<=0)return;
+if(diff<=0){explodeFinal();return;}
 
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
@@ -239,25 +201,20 @@ countdown.innerHTML=`⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's 
 
 /* SCLIPICI */
 setInterval(()=>{
-let g=document.createElement("div");
-g.className="glitter";
-g.style.left=Math.random()*100+"vw";
-g.style.animationDuration=(Math.random()*5+5)+"s";
-document.body.appendChild(g);
-setTimeout(()=>g.remove(),8000);
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDuration=(Math.random()*5+5)+"s";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),8000);
 },200);
 
 /* QUEST */
 const questions=[
-"Știi că te voi alege și peste 40 de ani?",
-"Simți că suntem acasă unul pentru altul?",
-"Crezi că povestea noastră a fost scrisă înainte?"
-];
-
-const responses=[
-"Știam că vei spune asta.",
-"Exact asta simt și eu.",
-"Suntem construiți unul pentru altul."
+"Crezi în suflete pereche?",
+"Ai lupta pentru noi indiferent de obstacole?",
+"M-ai alege din nou în fiecare viață?",
+"Simți că iubirea noastră e unică?"
 ];
 
 let current=0;
@@ -267,51 +224,46 @@ const response=document.getElementById("response");
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
 const secretBtn=document.getElementById("secretBtn");
-const final=document.getElementById("final");
-const bgMusic=document.getElementById("bgMusic");
+const secretSection=document.getElementById("secretSection");
 
-yesBtn.addEventListener("click",function(){
-response.innerText=responses[Math.floor(Math.random()*responses.length)];
+yesBtn.onclick=function(){
+response.innerText="Știam că vei spune asta 😌";
 current++;
 if(current<questions.length){
 setTimeout(()=>{
 question.innerText=questions[current];
 response.innerText="";
-},1200);
+},1000);
 }else{
+yesBtn.style.display="none";
+noBtn.style.display="none";
 secretBtn.style.display="inline-block";
-question.innerText="Mai este un singur lucru…";
+question.innerText="Mai este un ultim lucru…";
 }
-});
+}
 
-noBtn.addEventListener("mouseover",moveNo);
-noBtn.addEventListener("touchstart",moveNo);
-
-function moveNo(){
+noBtn.onmouseover=function(){
 noBtn.style.position="absolute";
 noBtn.style.left=Math.random()*70+"%";
 noBtn.style.top=Math.random()*70+"%";
 }
 
-secretBtn.addEventListener("click",function(){
-response.innerText="Atunci lasă-mă să îți spun ceva…";
-setTimeout(()=>{
-bgMusic.play();
-final.style.opacity="1";
-let lines=["f1","f2","f3","f4","f5","f6"];
-lines.forEach((id,i)=>{
-setTimeout(()=>{
-document.getElementById(id).style.opacity="1";
-},i*1500);
-});
-},2000);
-});
+secretBtn.onclick=function(){
+secretSection.style.display="block";
+setTimeout(()=>explodeFinal(),3000);
+}
 
-});
+function explodeFinal(){
+document.body.innerHTML=
+`<div class="background-blur"></div>
+<div class="overlay"></div>
+<div class="final">Te iubește al tău Rareș ENORM 💜</div>`;
+}
+
 </script>
-
 </body>
 </html>
+
 
 
 
