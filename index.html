@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pentru Cosmina ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:'Poppins',sans-serif;
+color:white;
+text-align:center;
+overflow-x:hidden;
+background:#0d001a;
+}
+
+/* FUNDAL */
+.background-blur{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("poza.png") center/cover no-repeat;
+filter:blur(35px) brightness(0.25);
+z-index:-3;
+transform:scale(1.2);
+}
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle at 30% 30%, rgba(120,0,180,0.3), transparent 60%);
+z-index:-2;
+}
+
+/* TITLU */
+h1{
+font-family:'Great Vibes',cursive;
+margin-top:30px;
+font-size:32px;
+background:linear-gradient(45deg,#d8b4ff,#ffffff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+margin-top:10px;
+font-size:15px;
+opacity:0.8;
+}
+
+/* IMAGINE */
+.image-container img{
+width:85%;
+max-width:360px;
+margin-top:25px;
+animation:float 6s infinite ease-in-out,
+heartbeat 2.5s infinite;
+filter:drop-shadow(0 0 40px rgba(200,150,255,0.7));
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+}
+
+@keyframes heartbeat{
+0%,100%{transform:scale(1)}
+30%{transform:scale(1.04)}
+50%{transform:scale(1)}
+70%{transform:scale(1.04)}
+}
+
+/* COUNTDOWN */
+.countdown{
+margin-top:15px;
+font-size:16px;
+opacity:0.85;
+}
+
+/* QUEST */
+.quest{
+margin-top:35px;
+padding:20px;
+}
+
+.question{
+font-size:20px;
+min-height:80px;
+}
+
+.btn{
+display:inline-block;
+padding:12px 26px;
+margin:10px;
+border:none;
+border-radius:30px;
+font-size:16px;
+background:linear-gradient(45deg,#6a00a8,#9d4edd);
+color:white;
+box-shadow:0 0 20px rgba(180,120,255,0.6);
+}
+
+.response{
+margin-top:15px;
+font-size:15px;
+opacity:0.9;
+min-height:30px;
+}
+
+/* SECRET */
+.secret-btn{
+display:none;
+margin-top:25px;
+background:linear-gradient(45deg,#9d4edd,#c77dff);
+border:none;
+color:white;
+padding:12px 28px;
+border-radius:30px;
+font-size:16px;
+box-shadow:0 0 25px rgba(200,150,255,0.8);
+}
+
+.secret-section{
+margin-top:25px;
+font-size:18px;
+display:none;
+line-height:1.6;
+animation:fadeIn 2s forwards;
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+/* FINAL */
+.final{
+font-family:'Great Vibes',cursive;
+font-size:36px;
+margin-top:60px;
+line-height:1.4;
+animation:fadeIn 3s forwards;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-blur"></div>
+<div class="overlay"></div>
+
+<h1>Cosmina...</h1>
+<div class="subtitle">Nu este doar un site. Este o promisiune.</div>
+
+<div class="image-container">
+<img src="poza.png">
+</div>
+
+<div class="countdown" id="countdown"></div>
+
+<div class="quest">
+<div class="question" id="question">
+Simți că suntem mai mult decât doi oameni?
+</div>
+
+<button class="btn" onclick="answerYes()">Da ❤️</button>
+<button class="btn" onclick="moveNo()" id="noBtn">Nu 🙈</button>
+
+<div class="response" id="response"></div>
+
+<button class="secret-btn" id="secretBtn" onclick="toggleSecret()">Promit.</button>
+
+<div class="secret-section" id="secretSection">
+Sper că înțelegi că ești absolut tot ce am.  
+Și te voi alege în fiecare zi, chiar și în cele grele.
+</div>
+</div>
+
+<audio id="bgMusic" src="muzica.mp3"></audio>
+
+<script>
+
+/* COUNTDOWN */
+const target=new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(()=>{
+let now=new Date().getTime();
+let diff=target-now;
+
+if(diff<=0){finalMessage();return;}
+
+let d=Math.floor(diff/(1000*60*60*24));
+let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((diff%(1000*60*60))/(1000*60));
+let s=Math.floor((diff%(1000*60))/1000);
+
+document.getElementById("countdown").innerHTML=
+`${d} zile ${h} ore ${m} minute ${s} secunde până la ziua noastră`;
+},1000);
+
+/* QUEST PROFUND */
+const questions=[
+"Simți că suntem mai mult decât doi oameni?",
+"Știi că te voi alege și peste 40 de ani?",
+"Simți că suntem acasă unul pentru altul?",
+"Crezi că povestea noastră a fost scrisă înainte să ne cunoaștem?"
+];
+
+let current=0;
+const messages=[
+"Cu tine, orice răspuns este iubire.",
+"Inimile noastre bat la fel.",
+"Noi nu alegem. Noi simțim.",
+"Știam asta. Întotdeauna."
+];
+
+function answerYes(){
+document.getElementById("response").innerText=
+messages[Math.floor(Math.random()*messages.length)];
+
+current++;
+
+if(current<questions.length){
+setTimeout(()=>{
+document.getElementById("question").innerText=questions[current];
+document.getElementById("response").innerText="";
+},1500);
+}else{
+document.getElementById("secretBtn").style.display="inline-block";
+document.getElementById("question").innerText=
+"Mai este un singur lucru pe care vreau să ți-l spun...";
+}
+}
+
+function moveNo(){
+const btn=document.getElementById("noBtn");
+btn.style.position="absolute";
+btn.style.left=Math.random()*60+"%";
+btn.style.top=Math.random()*60+"%";
+}
+
+function toggleSecret(){
+document.getElementById("secretSection").style.display="block";
+setTimeout(()=>{finalMessage();},4000);
+}
+
+function finalMessage(){
+document.body.innerHTML=
+`<div class="background-blur"></div>
+<div class="overlay"></div>
+<div class="final">
+Cosmina...<br><br>
+Te aleg azi.<br>
+Te aleg mâine.<br>
+Te aleg în fiecare viață.<br><br>
+— Soțul tău, Rareș ❤️
+</div>`;
+document.getElementById("bgMusic")?.play();
+}
+</script>
+
+</body>
+</html>
