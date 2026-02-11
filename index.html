@@ -14,32 +14,26 @@ body{
 background:black;
 color:white;
 font-family:'Poppins',sans-serif;
-overflow:hidden;
 text-align:center;
+overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* BACKGROUND CINEMATIC */
 .background{
 position:fixed;
 width:100%;
 height:100%;
 background:url("poza.jpg") center/cover no-repeat;
 filter:blur(45px) brightness(0.25);
-transform:scale(1.3);
+transform:scale(1.4);
 z-index:-3;
-animation:slowZoom 25s infinite alternate ease-in-out;
-}
-
-@keyframes slowZoom{
-from{transform:scale(1.3)}
-to{transform:scale(1.4)}
 }
 
 .overlay{
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at center, rgba(120,0,255,0.35), black 70%);
+background:radial-gradient(circle at center, rgba(114,9,183,0.35), black 70%);
 z-index:-2;
 }
 
@@ -47,112 +41,97 @@ z-index:-2;
 h1{
 font-family:'Great Vibes',cursive;
 font-size:38px;
-margin-top:70px;
+margin-top:60px;
 padding:0 20px;
 text-shadow:
-0 0 20px #c77dff,
-0 0 40px #4cc9f0,
-0 0 70px #ffffff;
-animation:pulseTitle 2s infinite alternate;
-}
-
-@keyframes pulseTitle{
-from{text-shadow:0 0 20px #c77dff}
-to{text-shadow:0 0 60px #4cc9f0}
+0 0 20px #7209b7,
+0 0 40px #4361ee;
 }
 
 /* COUNTDOWN */
 .countdown{
 font-family:'Great Vibes',cursive;
-font-size:30px;
+font-size:28px;
 margin-top:15px;
+padding:0 20px;
 text-shadow:
-0 0 15px #c77dff,
-0 0 35px #4cc9f0,
-0 0 60px #ffffff;
-animation:pulseCountdown 2s infinite alternate;
+0 0 15px #7209b7,
+0 0 35px #4361ee;
 }
 
-@keyframes pulseCountdown{
-from{opacity:0.85}
-to{opacity:1}
-}
-
-/* IMAGE */
+/* IMAGINE */
 .image-container{
 margin-top:30px;
 }
 
 .image-container img{
 width:85%;
-max-width:360px;
+max-width:380px;
 border-radius:25px;
-filter:drop-shadow(0 0 50px rgba(120,0,255,0.9));
-animation:float 7s infinite ease-in-out;
+filter:drop-shadow(0 0 40px rgba(114,9,183,0.8));
+animation:slowZoom 20s infinite alternate ease-in-out;
 }
 
-@keyframes float{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-18px)}
+@keyframes slowZoom{
+from{transform:scale(1)}
+to{transform:scale(1.05)}
 }
 
 /* INTREBARI */
 .question{
-margin-top:30px;
+margin-top:40px;
 font-size:20px;
-min-height:80px;
 padding:0 20px;
+min-height:70px;
 text-shadow:
-0 0 10px #c77dff,
-0 0 20px #4cc9f0;
+0 0 10px #7209b7,
+0 0 25px #4361ee;
 }
 
-/* BUTOANE MOV-ALBASTRU GLOW */
+/* BUTOANE */
 .btn{
-padding:14px 32px;
+padding:14px 30px;
 margin:15px;
 border:none;
 border-radius:30px;
 font-size:16px;
 color:white;
 background:linear-gradient(45deg,#7209b7,#4361ee);
-box-shadow:
-0 0 20px #7209b7,
-0 0 40px #4361ee,
-0 0 60px rgba(67,97,238,0.8);
 transition:0.2s;
-animation:glowBtn 2s infinite alternate;
-}
-
-@keyframes glowBtn{
-from{box-shadow:0 0 20px #7209b7}
-to{box-shadow:0 0 60px #4cc9f0}
 }
 
 .btn:active{
-transform:scale(0.92);
+transform:scale(0.9);
 }
 
 .response{
-margin-top:15px;
+margin-top:10px;
 min-height:30px;
 }
 
-/* PARTICULE */
-.sparkle{
+/* SCLIPICI REALIST */
+.glitter{
 position:fixed;
 top:-10px;
-color:white;
+width:4px;
+height:4px;
+border-radius:50%;
+background:radial-gradient(circle, #ffffff 0%, #a855f7 40%, #4361ee 70%);
+box-shadow:
+0 0 6px #a855f7,
+0 0 12px #4361ee;
 opacity:0.8;
-animation:fall linear forwards;
 pointer-events:none;
+animation:glitterFall linear forwards;
 }
 
-@keyframes fall{
-to{transform:translateY(110vh);opacity:0}
+@keyframes glitterFall{
+0%{transform:translateY(0) scale(1);opacity:0;}
+10%{opacity:1;}
+100%{transform:translateY(110vh) scale(0.6);opacity:0;}
 }
 
-/* FINAL */
+/* FINAL CINEMATIC */
 #final{
 position:fixed;
 width:100%;
@@ -165,18 +144,19 @@ flex-direction:column;
 text-align:center;
 opacity:0;
 z-index:100;
-transition:3s;
+transition:2s;
+padding:20px;
 }
 
 .final-line{
 font-family:'Great Vibes',cursive;
-font-size:34px;
+font-size:32px;
 opacity:0;
-margin:10px 0;
+margin:12px 0;
 transition:2s;
 text-shadow:
-0 0 20px #ffffff,
-0 0 50px #4cc9f0;
+0 0 20px #7209b7,
+0 0 40px #4361ee;
 }
 </style>
 </head>
@@ -219,28 +199,40 @@ Simți că suntem mai mult decât doi oameni?
 
 /* COUNTDOWN */
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
+
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
 if(diff<=0)return;
+
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
-countdown.innerHTML=`⏳ ${d}z ${h}h ${m}m ${s}s`;
+
+document.getElementById("countdown").innerHTML=
+`⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's Day`;
 },1000);
 
-/* PARTICULE */
+/* SCLIPICI REAL */
 setInterval(()=>{
-let s=document.createElement("div");
-s.innerHTML="✨";
-s.className="sparkle";
-s.style.left=Math.random()*100+"vw";
-s.style.fontSize=(Math.random()*10+10)+"px";
-s.style.animationDuration=(Math.random()*6+6)+"s";
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),9000);
-},400);
+for(let i=0;i<3;i++){
+let g=document.createElement("div");
+g.className="glitter";
+
+let size=Math.random()*4+2;
+g.style.width=size+"px";
+g.style.height=size+"px";
+
+g.style.left=Math.random()*100+"vw";
+
+let duration=Math.random()*5+6;
+g.style.animationDuration=duration+"s";
+
+document.body.appendChild(g);
+setTimeout(()=>g.remove(),duration*1000);
+}
+},200);
 
 /* QUEST */
 const questions=[
@@ -253,6 +245,7 @@ let current=0;
 
 function answerYes(){
 if(navigator.vibrate) navigator.vibrate(60);
+
 current++;
 if(current<questions.length){
 question.innerText=questions[current];
@@ -263,9 +256,10 @@ question.innerText="Mai este un singur lucru…";
 }
 
 function moveNo(){
-noBtn.style.position="absolute";
-noBtn.style.left=Math.random()*60+"%";
-noBtn.style.top=Math.random()*60+"%";
+let btn=document.getElementById("noBtn");
+btn.style.position="absolute";
+btn.style.left=Math.random()*70+"%";
+btn.style.top=Math.random()*70+"%";
 }
 
 /* FINAL */
@@ -277,7 +271,7 @@ let lines=["f1","f2","f3","f4","f5","f6"];
 lines.forEach((id,index)=>{
 setTimeout(()=>{
 document.getElementById(id).style.opacity=1;
-},index*2000);
+},index*1800);
 });
 }
 
