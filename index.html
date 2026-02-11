@@ -4,167 +4,210 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pentru Cosmina ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
-font-family:'Poppins',sans-serif;
+background:black;
 color:white;
-text-align:center;
-overflow-x:hidden;
-background:#0d001a;
+overflow:hidden;
+font-family:'Poppins',sans-serif;
 }
 
-/* FUNDAL */
-.background-blur{
+/* CINEMATIC BARS */
+.bar-top,.bar-bottom{
 position:fixed;
-top:0;
-left:0;
+width:100%;
+height:60px;
+background:black;
+z-index:2000;
+}
+.bar-top{top:0}
+.bar-bottom{bottom:0}
+
+/* INTRO */
+#intro{
+position:fixed;
 width:100%;
 height:100%;
-background:url("poza.png") center/cover no-repeat;
-filter:blur(35px) brightness(0.25);
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:1500;
+text-align:center;
+}
+
+.intro-text{
+font-family:'Great Vibes',cursive;
+font-size:36px;
+opacity:0;
+transition:1.5s;
+text-shadow:0 0 20px #c77dff;
+}
+
+/* MAIN */
+#main{
+opacity:0;
+transition:3s;
+text-align:center;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:url("poza.jpg") center/cover no-repeat;
+filter:blur(45px) brightness(0.25);
+transform:scale(1.3);
 z-index:-3;
-transform:scale(1.2);
+animation:slowZoom 25s infinite alternate ease-in-out;
+}
+
+@keyframes slowZoom{
+from{transform:scale(1.3)}
+to{transform:scale(1.4)}
 }
 
 .overlay{
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at 30% 30%, rgba(120,0,180,0.3), transparent 60%);
+background:radial-gradient(circle at center, rgba(140,0,255,0.3), black 70%);
 z-index:-2;
 }
 
-/* TITLU */
 h1{
 font-family:'Great Vibes',cursive;
-margin-top:30px;
-font-size:32px;
-background:linear-gradient(45deg,#d8b4ff,#ffffff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+font-size:44px;
+margin-top:80px;
+text-shadow:0 0 20px #c77dff,0 0 50px #ffffff;
+animation:pulseGlow 2s infinite alternate;
 }
 
-.subtitle{
+@keyframes pulseGlow{
+from{text-shadow:0 0 20px #c77dff}
+to{text-shadow:0 0 50px #ffffff}
+}
+
+.countdown{
+font-family:'Great Vibes',cursive;
+font-size:30px;
 margin-top:10px;
-font-size:15px;
-opacity:0.8;
+text-shadow:0 0 15px #e0aaff;
 }
 
-/* IMAGINE */
+/* IMAGE */
+.image-container{
+margin-top:40px;
+}
+
 .image-container img{
 width:85%;
 max-width:360px;
-margin-top:25px;
-animation:float 6s infinite ease-in-out,
-heartbeat 2.5s infinite;
-filter:drop-shadow(0 0 40px rgba(200,150,255,0.7));
+border-radius:25px;
+filter:drop-shadow(0 0 50px rgba(200,150,255,0.9));
+animation:float 7s infinite ease-in-out;
 }
 
 @keyframes float{
 0%,100%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
+50%{transform:translateY(-18px)}
 }
 
-@keyframes heartbeat{
-0%,100%{transform:scale(1)}
-30%{transform:scale(1.04)}
-50%{transform:scale(1)}
-70%{transform:scale(1.04)}
+/* PARTICULE */
+.sparkle{
+position:fixed;
+top:-10px;
+color:white;
+opacity:0.8;
+animation:fall linear forwards;
+pointer-events:none;
 }
 
-/* COUNTDOWN */
-.countdown{
-margin-top:15px;
-font-size:16px;
-opacity:0.85;
+@keyframes fall{
+to{transform:translateY(110vh);opacity:0}
 }
 
-/* QUEST */
-.quest{
-margin-top:35px;
-padding:20px;
-}
-
-.question{
-font-size:20px;
-min-height:80px;
-}
-
+/* BUTTONS */
 .btn{
-display:inline-block;
-padding:12px 26px;
-margin:10px;
+padding:14px 32px;
+margin:15px;
 border:none;
 border-radius:30px;
 font-size:16px;
-background:linear-gradient(45deg,#6a00a8,#9d4edd);
+background:linear-gradient(45deg,#6a00a8,#c77dff);
 color:white;
-box-shadow:0 0 20px rgba(180,120,255,0.6);
+box-shadow:0 0 20px #c77dff;
+transition:0.2s;
+animation:glowBtn 2s infinite alternate;
 }
 
-.response{
-margin-top:15px;
-font-size:15px;
-opacity:0.9;
-min-height:30px;
+@keyframes glowBtn{
+from{box-shadow:0 0 15px #c77dff}
+to{box-shadow:0 0 40px #ffffff}
 }
 
-/* SECRET */
-.secret-btn{
-display:none;
-margin-top:25px;
-background:linear-gradient(45deg,#9d4edd,#c77dff);
-border:none;
-color:white;
-padding:12px 28px;
-border-radius:30px;
-font-size:16px;
-box-shadow:0 0 25px rgba(200,150,255,0.8);
+.btn:active{
+transform:scale(0.93);
 }
 
-.secret-section{
-margin-top:25px;
-font-size:18px;
-display:none;
-line-height:1.6;
-animation:fadeIn 2s forwards;
-}
-
-@keyframes fadeIn{
-from{opacity:0}
-to{opacity:1}
-}
+.question{margin-top:30px;font-size:20px;min-height:80px}
+.response{margin-top:15px;min-height:30px}
 
 /* FINAL */
-.final{
+#final{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+opacity:0;
+z-index:3000;
+transition:3s;
+}
+
+.final-line{
 font-family:'Great Vibes',cursive;
-font-size:36px;
-margin-top:60px;
-line-height:1.4;
-animation:fadeIn 3s forwards;
+font-size:34px;
+opacity:0;
+margin:10px 0;
+transition:2s;
+text-shadow:0 0 20px #ffffff,0 0 40px #c77dff;
 }
 </style>
 </head>
 
 <body>
 
-<div class="background-blur"></div>
-<div class="overlay"></div>
+<div class="bar-top"></div>
+<div class="bar-bottom"></div>
 
-<h1>Cosmina...</h1>
-<div class="subtitle">Nu este doar un site. Este o promisiune.</div>
-
-<div class="image-container">
-<img src="poza.png">
+<div id="intro">
+<div class="intro-text" id="i1">Cosmina…</div>
+<div class="intro-text" id="i2">Nu este doar un site.</div>
+<div class="intro-text" id="i3">Este o promisiune.</div>
 </div>
 
+<div id="main">
+<div class="background"></div>
+<div class="overlay"></div>
+
+<h1>Cosmina ❤️</h1>
 <div class="countdown" id="countdown"></div>
 
-<div class="quest">
+<div class="image-container">
+<img src="poza.jpg">
+</div>
+
 <div class="question" id="question">
 Simți că suntem mai mult decât doi oameni?
 </div>
@@ -173,96 +216,101 @@ Simți că suntem mai mult decât doi oameni?
 <button class="btn" onclick="moveNo()" id="noBtn">Nu 🙈</button>
 
 <div class="response" id="response"></div>
-
-<button class="secret-btn" id="secretBtn" onclick="toggleSecret()">Promit.</button>
-
-<div class="secret-section" id="secretSection">
-Sper că înțelegi că ești absolut tot ce am.  
-Și te voi alege în fiecare zi, chiar și în cele grele.
+<button class="btn" id="secretBtn" style="display:none" onclick="startFinal()">Promit.</button>
 </div>
+
+<div id="final">
+<div class="final-line" id="f1">Cosmina…</div>
+<div class="final-line" id="f2">Te aleg în fiecare zi.</div>
+<div class="final-line" id="f3">Chiar și atunci când e greu.</div>
+<div class="final-line" id="f4">Chiar și atunci când obosim.</div>
+<div class="final-line" id="f5">Pentru că tu ești liniștea mea.</div>
+<div class="final-line" id="f6">— Băiatul tău, Rareș ❤️</div>
 </div>
 
 <audio id="bgMusic" src="muzica.mp3"></audio>
 
 <script>
 
+/* INTRO */
+setTimeout(()=>i1.style.opacity=1,500);
+setTimeout(()=>i2.style.opacity=1,2500);
+setTimeout(()=>i3.style.opacity=1,4500);
+setTimeout(()=>{
+intro.style.opacity=0;
+main.style.opacity=1;
+},7000);
+
 /* COUNTDOWN */
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
-
-if(diff<=0){finalMessage();return;}
-
+if(diff<=0)return;
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
-
-document.getElementById("countdown").innerHTML=
-`${d} zile ${h} ore ${m} minute ${s} secunde până la ziua noastră`;
+countdown.innerHTML=`${d}z ${h}h ${m}m ${s}s`;
 },1000);
 
-/* QUEST PROFUND */
+/* PARTICULE */
+setInterval(()=>{
+let s=document.createElement("div");
+s.innerHTML="✨";
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.fontSize=(Math.random()*10+10)+"px";
+s.style.animationDuration=(Math.random()*6+6)+"s";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),9000);
+},400);
+
+/* QUEST */
 const questions=[
-"Simți că suntem mai mult decât doi oameni?",
 "Știi că te voi alege și peste 40 de ani?",
 "Simți că suntem acasă unul pentru altul?",
-"Crezi că povestea noastră a fost scrisă înainte să ne cunoaștem?"
+"Crezi că povestea noastră a fost scrisă înainte?"
 ];
 
 let current=0;
-const messages=[
-"Cu tine, orice răspuns este iubire.",
-"Inimile noastre bat la fel.",
-"Noi nu alegem. Noi simțim.",
-"Știam asta. Întotdeauna."
-];
 
 function answerYes(){
-document.getElementById("response").innerText=
-messages[Math.floor(Math.random()*messages.length)];
-
+if(navigator.vibrate) navigator.vibrate(60);
 current++;
-
 if(current<questions.length){
-setTimeout(()=>{
-document.getElementById("question").innerText=questions[current];
-document.getElementById("response").innerText="";
-},1500);
+question.innerText=questions[current];
 }else{
-document.getElementById("secretBtn").style.display="inline-block";
-document.getElementById("question").innerText=
-"Mai este un singur lucru pe care vreau să ți-l spun...";
+secretBtn.style.display="inline-block";
+question.innerText="Mai este un singur lucru…";
 }
 }
 
 function moveNo(){
-const btn=document.getElementById("noBtn");
-btn.style.position="absolute";
-btn.style.left=Math.random()*60+"%";
-btn.style.top=Math.random()*60+"%";
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*60+"%";
+noBtn.style.top=Math.random()*60+"%";
 }
 
-function toggleSecret(){
-document.getElementById("secretSection").style.display="block";
-setTimeout(()=>{finalMessage();},4000);
+/* FINAL */
+function startFinal(){
+bgMusic.play();
+final.style.opacity=1;
+
+let lines=["f1","f2","f3","f4","f5","f6"];
+lines.forEach((id,index)=>{
+setTimeout(()=>{
+document.getElementById(id).style.opacity=1;
+},index*2000);
+});
+
+setTimeout(()=>{
+document.body.style.background="white";
+},15000);
 }
 
-function finalMessage(){
-document.body.innerHTML=
-`<div class="background-blur"></div>
-<div class="overlay"></div>
-<div class="final">
-Cosmina...<br><br>
-Te aleg azi.<br>
-Te aleg mâine.<br>
-Te aleg în fiecare viață.<br><br>
-— Soțul tău, Rareș ❤️
-</div>`;
-document.getElementById("bgMusic")?.play();
-}
 </script>
 
 </body>
 </html>
+
