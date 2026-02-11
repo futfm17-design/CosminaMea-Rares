@@ -18,7 +18,7 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* BACKGROUND CINEMATIC */
+/* BACKGROUND */
 .background{
 position:fixed;
 width:100%;
@@ -43,9 +43,7 @@ font-family:'Great Vibes',cursive;
 font-size:38px;
 margin-top:60px;
 padding:0 20px;
-text-shadow:
-0 0 20px #7209b7,
-0 0 40px #4361ee;
+text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
 }
 
 /* COUNTDOWN */
@@ -54,9 +52,7 @@ font-family:'Great Vibes',cursive;
 font-size:28px;
 margin-top:15px;
 padding:0 20px;
-text-shadow:
-0 0 15px #7209b7,
-0 0 35px #4361ee;
+text-shadow:0 0 15px #7209b7,0 0 35px #4361ee;
 }
 
 /* IMAGINE */
@@ -83,9 +79,7 @@ margin-top:40px;
 font-size:20px;
 padding:0 20px;
 min-height:70px;
-text-shadow:
-0 0 10px #7209b7,
-0 0 25px #4361ee;
+text-shadow:0 0 10px #7209b7,0 0 25px #4361ee;
 }
 
 /* BUTOANE */
@@ -109,7 +103,7 @@ margin-top:10px;
 min-height:30px;
 }
 
-/* SCLIPICI REALIST */
+/* SCLIPICI REAL */
 .glitter{
 position:fixed;
 top:-10px;
@@ -117,21 +111,19 @@ width:4px;
 height:4px;
 border-radius:50%;
 background:radial-gradient(circle, #ffffff 0%, #a855f7 40%, #4361ee 70%);
-box-shadow:
-0 0 6px #a855f7,
-0 0 12px #4361ee;
+box-shadow:0 0 6px #a855f7,0 0 12px #4361ee;
 opacity:0.8;
 pointer-events:none;
 animation:glitterFall linear forwards;
 }
 
 @keyframes glitterFall{
-0%{transform:translateY(0) scale(1);opacity:0;}
+0%{transform:translateY(0);opacity:0;}
 10%{opacity:1;}
-100%{transform:translateY(110vh) scale(0.6);opacity:0;}
+100%{transform:translateY(110vh);opacity:0;}
 }
 
-/* FINAL CINEMATIC */
+/* FINAL */
 #final{
 position:fixed;
 width:100%;
@@ -154,9 +146,7 @@ font-size:32px;
 opacity:0;
 margin:12px 0;
 transition:2s;
-text-shadow:
-0 0 20px #7209b7,
-0 0 40px #4361ee;
+text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
 }
 </style>
 </head>
@@ -197,9 +187,60 @@ Simți că suntem mai mult decât doi oameni?
 
 <script>
 
+/* INTRO CINEMATIC */
+window.onload=function(){
+document.body.style.overflow="hidden";
+
+let intro=document.createElement("div");
+intro.style.position="fixed";
+intro.style.width="100%";
+intro.style.height="100%";
+intro.style.background="black";
+intro.style.display="flex";
+intro.style.flexDirection="column";
+intro.style.justifyContent="center";
+intro.style.alignItems="center";
+intro.style.zIndex="200";
+intro.style.fontFamily="Great Vibes, cursive";
+intro.style.fontSize="32px";
+intro.style.textAlign="center";
+intro.style.padding="20px";
+intro.style.transition="1.5s";
+
+document.body.appendChild(intro);
+
+let messages=["Cosmina…","Nu este doar un site.","Este o promisiune."];
+let index=0;
+
+function typeWriter(text,callback){
+let i=0;
+intro.innerHTML="";
+let interval=setInterval(()=>{
+intro.innerHTML+=text.charAt(i);
+i++;
+if(i>=text.length){
+clearInterval(interval);
+setTimeout(callback,1000);
+}
+},70);
+}
+
+function nextMessage(){
+if(index<messages.length){
+typeWriter(messages[index],()=>{index++;nextMessage();});
+}else{
+intro.style.opacity="0";
+setTimeout(()=>{
+intro.remove();
+document.body.style.overflow="auto";
+},1500);
+}
+}
+nextMessage();
+};
+
 /* COUNTDOWN */
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
-
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
@@ -210,25 +251,18 @@ let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML=
+countdown.innerHTML=
 `⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's Day`;
 },1000);
 
-/* SCLIPICI REAL */
+/* SCLIPICI */
 setInterval(()=>{
 for(let i=0;i<3;i++){
 let g=document.createElement("div");
 g.className="glitter";
-
-let size=Math.random()*4+2;
-g.style.width=size+"px";
-g.style.height=size+"px";
-
 g.style.left=Math.random()*100+"vw";
-
 let duration=Math.random()*5+6;
 g.style.animationDuration=duration+"s";
-
 document.body.appendChild(g);
 setTimeout(()=>g.remove(),duration*1000);
 }
@@ -241,14 +275,28 @@ const questions=[
 "Crezi că povestea noastră a fost scrisă înainte?"
 ];
 
+const responses=[
+"Știam că vei spune asta.",
+"Exact asta simt și eu.",
+"Suntem construiți unul pentru altul.",
+"De asta noi suntem diferiți."
+];
+
 let current=0;
 
 function answerYes(){
 if(navigator.vibrate) navigator.vibrate(60);
 
+response.innerText=
+responses[Math.floor(Math.random()*responses.length)];
+
 current++;
+
 if(current<questions.length){
+setTimeout(()=>{
 question.innerText=questions[current];
+response.innerText="";
+},1200);
 }else{
 secretBtn.style.display="inline-block";
 question.innerText="Mai este un singur lucru…";
@@ -264,6 +312,9 @@ btn.style.top=Math.random()*70+"%";
 
 /* FINAL */
 function startFinal(){
+response.innerText="Atunci lasă-mă să îți spun ceva…";
+
+setTimeout(()=>{
 bgMusic.play();
 final.style.opacity=1;
 
@@ -273,11 +324,12 @@ setTimeout(()=>{
 document.getElementById(id).style.opacity=1;
 },index*1800);
 });
+},2000);
 }
 
 </script>
-
 </body>
 </html>
+
 
 
