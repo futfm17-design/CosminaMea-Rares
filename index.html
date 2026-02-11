@@ -35,12 +35,13 @@ width:100%;
 height:100%;
 background:radial-gradient(circle at center, rgba(114,9,183,0.35), black 70%);
 z-index:-2;
+pointer-events:none;
 }
 
 /* TITLU */
 h1{
 font-family:'Great Vibes',cursive;
-font-size:38px;
+font-size:36px;
 margin-top:60px;
 padding:0 20px;
 text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
@@ -49,13 +50,12 @@ text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
 /* COUNTDOWN */
 .countdown{
 font-family:'Great Vibes',cursive;
-font-size:28px;
+font-size:26px;
 margin-top:15px;
-padding:0 20px;
 text-shadow:0 0 15px #7209b7,0 0 35px #4361ee;
 }
 
-/* IMAGINE */
+/* IMAGE */
 .image-container{
 margin-top:30px;
 }
@@ -65,24 +65,18 @@ width:85%;
 max-width:380px;
 border-radius:25px;
 filter:drop-shadow(0 0 40px rgba(114,9,183,0.8));
-animation:slowZoom 20s infinite alternate ease-in-out;
 }
 
-@keyframes slowZoom{
-from{transform:scale(1)}
-to{transform:scale(1.05)}
-}
-
-/* INTREBARI */
+/* QUESTION */
 .question{
 margin-top:40px;
 font-size:20px;
 padding:0 20px;
-min-height:70px;
+min-height:60px;
 text-shadow:0 0 10px #7209b7,0 0 25px #4361ee;
 }
 
-/* BUTOANE */
+/* BUTTONS */
 .btn{
 padding:14px 30px;
 margin:15px;
@@ -103,22 +97,21 @@ margin-top:10px;
 min-height:30px;
 }
 
-/* SCLIPICI REAL */
+/* SCLIPICI */
 .glitter{
 position:fixed;
 top:-10px;
 width:4px;
 height:4px;
 border-radius:50%;
-background:radial-gradient(circle, #ffffff 0%, #a855f7 40%, #4361ee 70%);
+background:radial-gradient(circle,#fff,#a855f7,#4361ee);
 box-shadow:0 0 6px #a855f7,0 0 12px #4361ee;
-opacity:0.8;
 pointer-events:none;
-animation:glitterFall linear forwards;
+animation:fall linear forwards;
 }
 
-@keyframes glitterFall{
-0%{transform:translateY(0);opacity:0;}
+@keyframes fall{
+0%{opacity:0;}
 10%{opacity:1;}
 100%{transform:translateY(110vh);opacity:0;}
 }
@@ -133,18 +126,17 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-text-align:center;
 opacity:0;
-z-index:100;
+pointer-events:none;
 transition:2s;
-padding:20px;
+z-index:100;
 }
 
 .final-line{
 font-family:'Great Vibes',cursive;
 font-size:32px;
+margin:10px;
 opacity:0;
-margin:12px 0;
 transition:2s;
 text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
 }
@@ -168,11 +160,11 @@ text-shadow:0 0 20px #7209b7,0 0 40px #4361ee;
 Simți că suntem mai mult decât doi oameni?
 </div>
 
-<button class="btn" onclick="answerYes()">Da ❤️</button>
-<button class="btn" onclick="moveNo()" id="noBtn">Nu 🙈</button>
+<button class="btn" id="yesBtn">Da ❤️</button>
+<button class="btn" id="noBtn">Nu 🙈</button>
 
 <div class="response" id="response"></div>
-<button class="btn" id="secretBtn" style="display:none" onclick="startFinal()">Promit.</button>
+<button class="btn" id="secretBtn" style="display:none;">Promit.</button>
 
 <div id="final">
 <div class="final-line" id="f1">Cosmina…</div>
@@ -186,33 +178,26 @@ Simți că suntem mai mult decât doi oameni?
 <audio id="bgMusic" src="muzica.mp3"></audio>
 
 <script>
+document.addEventListener("DOMContentLoaded",function(){
 
-/* INTRO CINEMATIC */
-window.onload=function(){
-document.body.style.overflow="hidden";
-
+/* INTRO */
 let intro=document.createElement("div");
 intro.style.position="fixed";
 intro.style.width="100%";
 intro.style.height="100%";
 intro.style.background="black";
 intro.style.display="flex";
-intro.style.flexDirection="column";
 intro.style.justifyContent="center";
 intro.style.alignItems="center";
-intro.style.zIndex="200";
-intro.style.fontFamily="Great Vibes, cursive";
+intro.style.fontFamily="Great Vibes";
 intro.style.fontSize="32px";
-intro.style.textAlign="center";
-intro.style.padding="20px";
-intro.style.transition="1.5s";
-
+intro.style.zIndex="200";
 document.body.appendChild(intro);
 
 let messages=["Cosmina…","Nu este doar un site.","Este o promisiune."];
 let index=0;
 
-function typeWriter(text,callback){
+function typeText(text,cb){
 let i=0;
 intro.innerHTML="";
 let interval=setInterval(()=>{
@@ -220,27 +205,25 @@ intro.innerHTML+=text.charAt(i);
 i++;
 if(i>=text.length){
 clearInterval(interval);
-setTimeout(callback,1000);
+setTimeout(cb,1000);
 }
 },70);
 }
 
-function nextMessage(){
+function next(){
 if(index<messages.length){
-typeWriter(messages[index],()=>{index++;nextMessage();});
+typeText(messages[index],()=>{index++;next();});
 }else{
 intro.style.opacity="0";
-setTimeout(()=>{
-intro.remove();
-document.body.style.overflow="auto";
-},1500);
+setTimeout(()=>intro.remove(),1500);
 }
 }
-nextMessage();
-};
+next();
 
 /* COUNTDOWN */
+const countdown=document.getElementById("countdown");
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
+
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
@@ -251,21 +234,17 @@ let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
 
-countdown.innerHTML=
-`⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's Day`;
+countdown.innerHTML=`⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's Day`;
 },1000);
 
 /* SCLIPICI */
 setInterval(()=>{
-for(let i=0;i<3;i++){
 let g=document.createElement("div");
 g.className="glitter";
 g.style.left=Math.random()*100+"vw";
-let duration=Math.random()*5+6;
-g.style.animationDuration=duration+"s";
+g.style.animationDuration=(Math.random()*5+5)+"s";
 document.body.appendChild(g);
-setTimeout(()=>g.remove(),duration*1000);
-}
+setTimeout(()=>g.remove(),8000);
 },200);
 
 /* QUEST */
@@ -278,20 +257,22 @@ const questions=[
 const responses=[
 "Știam că vei spune asta.",
 "Exact asta simt și eu.",
-"Suntem construiți unul pentru altul.",
-"De asta noi suntem diferiți."
+"Suntem construiți unul pentru altul."
 ];
 
 let current=0;
 
-function answerYes(){
-if(navigator.vibrate) navigator.vibrate(60);
+const question=document.getElementById("question");
+const response=document.getElementById("response");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const secretBtn=document.getElementById("secretBtn");
+const final=document.getElementById("final");
+const bgMusic=document.getElementById("bgMusic");
 
-response.innerText=
-responses[Math.floor(Math.random()*responses.length)];
-
+yesBtn.addEventListener("click",function(){
+response.innerText=responses[Math.floor(Math.random()*responses.length)];
 current++;
-
 if(current<questions.length){
 setTimeout(()=>{
 question.innerText=questions[current];
@@ -301,33 +282,34 @@ response.innerText="";
 secretBtn.style.display="inline-block";
 question.innerText="Mai este un singur lucru…";
 }
-}
+});
+
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("touchstart",moveNo);
 
 function moveNo(){
-let btn=document.getElementById("noBtn");
-btn.style.position="absolute";
-btn.style.left=Math.random()*70+"%";
-btn.style.top=Math.random()*70+"%";
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*70+"%";
+noBtn.style.top=Math.random()*70+"%";
 }
 
-/* FINAL */
-function startFinal(){
+secretBtn.addEventListener("click",function(){
 response.innerText="Atunci lasă-mă să îți spun ceva…";
-
 setTimeout(()=>{
 bgMusic.play();
-final.style.opacity=1;
-
+final.style.opacity="1";
 let lines=["f1","f2","f3","f4","f5","f6"];
-lines.forEach((id,index)=>{
+lines.forEach((id,i)=>{
 setTimeout(()=>{
-document.getElementById(id).style.opacity=1;
-},index*1800);
+document.getElementById(id).style.opacity="1";
+},i*1500);
 });
 },2000);
-}
+});
 
+});
 </script>
+
 </body>
 </html>
 
