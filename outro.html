@@ -1,50 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cosmina ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-margin:0;
 background:black;
 color:white;
 font-family:'Great Vibes',cursive;
 text-align:center;
 overflow:hidden;
 }
-.background{
+
+/* FUNDAL IDENTIC CU PAGINA PRINCIPALA */
+.background-blur{
 position:fixed;
-width:100%;
-height:100%;
+top:0;left:0;
+width:100%;height:100%;
 background:url("poza.jpg") center/cover no-repeat;
 filter:blur(25px) brightness(0.4);
-z-index:-2;
+transform:scale(1.1);
+z-index:-3;
 }
+
 .overlay{
 position:fixed;
-width:100%;
-height:100%;
-background:radial-gradient(circle at 30% 30%, rgba(138,43,226,0.4), transparent 60%);
-z-index:-1;
+width:100%;height:100%;
+background:
+radial-gradient(circle at 30% 30%, rgba(138,43,226,0.35), transparent 60%),
+radial-gradient(circle at 70% 70%, rgba(0,191,255,0.35), transparent 60%);
+z-index:-2;
 }
+
+/* TEXT FINAL */
 .final{
-margin-top:35vh;
-font-size:28px;
-text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:30px;
+line-height:1.5;
+text-shadow:
+0 0 15px #8a2be2,
+0 0 25px #00bfff,
+0 0 35px rgba(138,43,226,0.8);
+opacity:0;
+animation:fadeIn 3s forwards;
 }
+
+@keyframes fadeIn{
+to{opacity:1;}
+}
+
 canvas{
 position:fixed;
-top:0;
-left:0;
+top:0;left:0;
+z-index:-1;
 }
 </style>
 </head>
+
 <body>
 
-<div class="background"></div>
+<div class="background-blur"></div>
 <div class="overlay"></div>
-<canvas id="canvas"></canvas>
+<canvas id="particles"></canvas>
 
 <div class="final">
 Cosmina…<br><br>
@@ -59,36 +84,50 @@ Băiatul tău, Rareș ❤️
 <audio src="muzica.mp3" autoplay loop></audio>
 
 <script>
-const canvas=document.getElementById("canvas");
+
+/* EXPLOZIE INITIALA */
+const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let particles=[];
-for(let i=0;i<200;i++){
+
+/* EXPLOZIE LA INTRARE */
+for(let i=0;i<250;i++){
 particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
+x:canvas.width/2,
+y:canvas.height/2,
 r:Math.random()*3+1,
-vx:(Math.random()-0.5)*2,
-vy:(Math.random()-0.5)*2
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
 });
 }
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="rgba(138,43,226,0.7)";
+
 particles.forEach(p=>{
 p.x+=p.vx;
 p.y+=p.vy;
+p.life--;
+
+ctx.fillStyle="rgba(138,43,226,"+(p.life/100)+")";
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
 ctx.fill();
 });
+
+particles=particles.filter(p=>p.life>0);
+
 requestAnimationFrame(animate);
 }
+
 animate();
+
 </script>
 
 </body>
 </html>
+
