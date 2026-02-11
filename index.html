@@ -13,50 +13,12 @@
 body{
 background:black;
 color:white;
-overflow:hidden;
 font-family:'Poppins',sans-serif;
-}
-
-/* CINEMATIC BARS */
-.bar-top,.bar-bottom{
-position:fixed;
-width:100%;
-height:60px;
-background:black;
-z-index:2000;
-}
-.bar-top{top:0}
-.bar-bottom{bottom:0}
-
-/* INTRO */
-#intro{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:1500;
+overflow:hidden;
 text-align:center;
 }
 
-.intro-text{
-font-family:'Great Vibes',cursive;
-font-size:36px;
-opacity:0;
-transition:1.5s;
-text-shadow:0 0 20px #c77dff;
-}
-
-/* MAIN */
-#main{
-opacity:0;
-transition:3s;
-text-align:center;
-}
-
+/* BACKGROUND */
 .background{
 position:fixed;
 width:100%;
@@ -77,46 +39,103 @@ to{transform:scale(1.4)}
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at center, rgba(140,0,255,0.3), black 70%);
+background:radial-gradient(circle at center, rgba(120,0,255,0.35), black 70%);
 z-index:-2;
 }
 
+/* TITLU */
 h1{
 font-family:'Great Vibes',cursive;
-font-size:44px;
-margin-top:80px;
-text-shadow:0 0 20px #c77dff,0 0 50px #ffffff;
-animation:pulseGlow 2s infinite alternate;
+font-size:38px;
+margin-top:70px;
+padding:0 20px;
+text-shadow:
+0 0 20px #c77dff,
+0 0 40px #4cc9f0,
+0 0 70px #ffffff;
+animation:pulseTitle 2s infinite alternate;
 }
 
-@keyframes pulseGlow{
+@keyframes pulseTitle{
 from{text-shadow:0 0 20px #c77dff}
-to{text-shadow:0 0 50px #ffffff}
+to{text-shadow:0 0 60px #4cc9f0}
 }
 
+/* COUNTDOWN */
 .countdown{
 font-family:'Great Vibes',cursive;
 font-size:30px;
-margin-top:10px;
-text-shadow:0 0 15px #e0aaff;
+margin-top:15px;
+text-shadow:
+0 0 15px #c77dff,
+0 0 35px #4cc9f0,
+0 0 60px #ffffff;
+animation:pulseCountdown 2s infinite alternate;
+}
+
+@keyframes pulseCountdown{
+from{opacity:0.85}
+to{opacity:1}
 }
 
 /* IMAGE */
 .image-container{
-margin-top:40px;
+margin-top:30px;
 }
 
 .image-container img{
 width:85%;
 max-width:360px;
 border-radius:25px;
-filter:drop-shadow(0 0 50px rgba(200,150,255,0.9));
+filter:drop-shadow(0 0 50px rgba(120,0,255,0.9));
 animation:float 7s infinite ease-in-out;
 }
 
 @keyframes float{
 0%,100%{transform:translateY(0)}
 50%{transform:translateY(-18px)}
+}
+
+/* INTREBARI */
+.question{
+margin-top:30px;
+font-size:20px;
+min-height:80px;
+padding:0 20px;
+text-shadow:
+0 0 10px #c77dff,
+0 0 20px #4cc9f0;
+}
+
+/* BUTOANE MOV-ALBASTRU GLOW */
+.btn{
+padding:14px 32px;
+margin:15px;
+border:none;
+border-radius:30px;
+font-size:16px;
+color:white;
+background:linear-gradient(45deg,#7209b7,#4361ee);
+box-shadow:
+0 0 20px #7209b7,
+0 0 40px #4361ee,
+0 0 60px rgba(67,97,238,0.8);
+transition:0.2s;
+animation:glowBtn 2s infinite alternate;
+}
+
+@keyframes glowBtn{
+from{box-shadow:0 0 20px #7209b7}
+to{box-shadow:0 0 60px #4cc9f0}
+}
+
+.btn:active{
+transform:scale(0.92);
+}
+
+.response{
+margin-top:15px;
+min-height:30px;
 }
 
 /* PARTICULE */
@@ -133,32 +152,6 @@ pointer-events:none;
 to{transform:translateY(110vh);opacity:0}
 }
 
-/* BUTTONS */
-.btn{
-padding:14px 32px;
-margin:15px;
-border:none;
-border-radius:30px;
-font-size:16px;
-background:linear-gradient(45deg,#6a00a8,#c77dff);
-color:white;
-box-shadow:0 0 20px #c77dff;
-transition:0.2s;
-animation:glowBtn 2s infinite alternate;
-}
-
-@keyframes glowBtn{
-from{box-shadow:0 0 15px #c77dff}
-to{box-shadow:0 0 40px #ffffff}
-}
-
-.btn:active{
-transform:scale(0.93);
-}
-
-.question{margin-top:30px;font-size:20px;min-height:80px}
-.response{margin-top:15px;min-height:30px}
-
 /* FINAL */
 #final{
 position:fixed;
@@ -171,7 +164,7 @@ align-items:center;
 flex-direction:column;
 text-align:center;
 opacity:0;
-z-index:3000;
+z-index:100;
 transition:3s;
 }
 
@@ -181,27 +174,20 @@ font-size:34px;
 opacity:0;
 margin:10px 0;
 transition:2s;
-text-shadow:0 0 20px #ffffff,0 0 40px #c77dff;
+text-shadow:
+0 0 20px #ffffff,
+0 0 50px #4cc9f0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bar-top"></div>
-<div class="bar-bottom"></div>
-
-<div id="intro">
-<div class="intro-text" id="i1">Cosmina…</div>
-<div class="intro-text" id="i2">Nu este doar un site.</div>
-<div class="intro-text" id="i3">Este o promisiune.</div>
-</div>
-
-<div id="main">
 <div class="background"></div>
 <div class="overlay"></div>
 
-<h1>Cosmina ❤️</h1>
+<h1>Iubirea mea Cosmina, astăzi e despre noi 💜</h1>
+
 <div class="countdown" id="countdown"></div>
 
 <div class="image-container">
@@ -217,7 +203,6 @@ Simți că suntem mai mult decât doi oameni?
 
 <div class="response" id="response"></div>
 <button class="btn" id="secretBtn" style="display:none" onclick="startFinal()">Promit.</button>
-</div>
 
 <div id="final">
 <div class="final-line" id="f1">Cosmina…</div>
@@ -232,15 +217,6 @@ Simți că suntem mai mult decât doi oameni?
 
 <script>
 
-/* INTRO */
-setTimeout(()=>i1.style.opacity=1,500);
-setTimeout(()=>i2.style.opacity=1,2500);
-setTimeout(()=>i3.style.opacity=1,4500);
-setTimeout(()=>{
-intro.style.opacity=0;
-main.style.opacity=1;
-},7000);
-
 /* COUNTDOWN */
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
@@ -251,7 +227,7 @@ let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
-countdown.innerHTML=`${d}z ${h}h ${m}m ${s}s`;
+countdown.innerHTML=`⏳ ${d}z ${h}h ${m}m ${s}s`;
 },1000);
 
 /* PARTICULE */
@@ -303,14 +279,11 @@ setTimeout(()=>{
 document.getElementById(id).style.opacity=1;
 },index*2000);
 });
-
-setTimeout(()=>{
-document.body.style.background="white";
-},15000);
 }
 
 </script>
 
 </body>
 </html>
+
 
