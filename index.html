@@ -8,6 +8,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
 background:black;
 color:white;
@@ -39,6 +40,8 @@ z-index:-2;
 /* INTRO */
 #intro{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:black;
@@ -48,6 +51,8 @@ justify-content:center;
 font-size:28px;
 z-index:9999;
 text-shadow:0 0 15px #8a2be2,0 0 30px #00bfff;
+opacity:1;
+transition:opacity 1.5s ease;
 }
 
 /* TITLU */
@@ -89,6 +94,13 @@ cursor:pointer;
 font-size:24px;
 margin-top:30px;
 text-shadow:0 0 10px #8a2be2,0 0 20px #00bfff;
+min-height:60px;
+}
+
+#response{
+margin-top:10px;
+font-size:18px;
+min-height:30px;
 }
 
 .secret-btn{
@@ -148,7 +160,12 @@ Ești pregătită pentru cel mai sincer test al iubirii?
 
 <button class="btn" id="yesBtn">Da ❤️</button>
 <button class="btn" id="noBtn">Nu 🙈</button>
-<button class="secret-btn" id="secretBtn">🔐 Ce simt pentru tine…</button>
+
+<div id="response"></div>
+
+<button class="secret-btn" id="secretBtn">
+🔐 Ce simt pentru tine…
+</button>
 
 <audio id="bgMusic" src="muzica.mp3" autoplay loop></audio>
 
@@ -161,6 +178,7 @@ const introText=[
 "Este o promisiune.",
 "Este despre noi."
 ];
+
 let introIndex=0;
 const intro=document.getElementById("intro");
 
@@ -171,20 +189,28 @@ introIndex++;
 setTimeout(typeIntro,2000);
 }else{
 intro.style.opacity="0";
-setTimeout(()=>intro.remove(),1500);
+setTimeout(()=>{
+intro.style.display="none";
+},1500);
 }
 }
+
+document.addEventListener("DOMContentLoaded",function(){
 typeIntro();
+});
 
 /* COUNTDOWN */
 const target=new Date("Feb 14, 2026 00:00:00").getTime();
+
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=target-now;
+
 let d=Math.floor(diff/(1000*60*60*24));
 let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 let m=Math.floor((diff%(1000*60*60))/(1000*60));
 let s=Math.floor((diff%(1000*60))/1000);
+
 document.getElementById("countdown").innerHTML=
 `⏳ ${d}z ${h}h ${m}m ${s}s mai sunt până la Valentine's Day`;
 },1000);
@@ -197,17 +223,34 @@ const questions=[
 "Simți că iubirea noastră e unică?",
 "Îți vezi viitorul doar cu mine?"
 ];
+
+const funny=[
+"Știam că asta vei spune 💜",
+"Răspuns corect, ca întotdeauna 😌",
+"Nu aveai altă variantă 😏",
+"Exact ce voiam să aud ❤️",
+"Promit să te aleg mereu."
+];
+
 let current=0;
 
 yesBtn.onclick=()=>{
+document.getElementById("response").innerText=
+funny[Math.floor(Math.random()*funny.length)];
+
 current++;
+
 if(current<questions.length){
+setTimeout(()=>{
 question.innerText=questions[current];
+document.getElementById("response").innerText="";
+},1000);
 }else{
 yesBtn.style.display="none";
 noBtn.style.display="none";
 secretBtn.style.display="inline-block";
 question.innerText="Mai este un ultim lucru pe care trebuie să îl știi…";
+document.getElementById("response").innerText="";
 }
 };
 
@@ -239,7 +282,7 @@ vy:Math.random()*1+0.5
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="rgba(138,43,226,0.7)";
+ctx.fillStyle="rgba(138,43,226,0.6)";
 particles.forEach(p=>{
 p.y+=p.vy;
 if(p.y>canvas.height)p.y=0;
@@ -259,8 +302,10 @@ else m.pause();
 }
 
 </script>
+
 </body>
 </html>
+
 
 
 
